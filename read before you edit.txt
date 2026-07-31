@@ -1,0 +1,27 @@
+Hello! If you want to edit this shader, you should read the license first. 
+
+THE FOLLOWING DOES NOT GUARANTEE LEGAL COMPLIANCE: 
+In short, you can redistribute & modify mellow with the condition that you keep the original license & copyright notice (so just keep the whole LICENSE file intact, and add your own license on top of what's already there). 
+I would appreciate if you credited me on the curseforge/modrinth page. Also please don't use the mellow name (eg. 'Mellow+' would *not* be cool with me) or any other assets (screenshots, logo) for your project. 
+
+This file contains information about how this shader is structured.
+
+The "program" subdirectory contains files that are shared across all 3 minecraft dimensions. 
+All the files in the world-1, world0 and world1 folders do is include their program/ counterpart.
+They also have a #define DIMENSION_whatever directive. This way, if you want something to happen in the overworld only, you can check if DIMENSION_OVERWORLD is defined. 
+
+Most of the lighting is done in gbuffers using the "/global/lighting.glsl" file. 
+Composite passes handle post-processing, sky rendering, fog and clouds. You can find information about what each pass does inside the file itself.
+
+All used uniforms are already defined in "/lib/all_the_uniforms.glsl". Since they are named with the "camelCase" convention, they do not conflict with functions (named with "snake_case") or variables/structs ("PascalCase").
+Files in the lib/ directory are usually short functions or definitions that are useful for many things. They are included at the beginning of every file to ease development.
+Files in the global/ directory are used for specific effects, or groups of similar effects. They are only included when needed.
+
+Buffer usage (might not always be up to date):
+colortex0: main buffer
+colortex1: bloom
+colortex2: SMAA main
+colortex3: SMAA area & Blocky cloud texture
+gaux1: Reflections & TAA
+colortex5: Quarter-res, half precision depth (deferred) + SMAA search (composite)
+colortex6: Cloud noise texture
